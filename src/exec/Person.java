@@ -1,3 +1,5 @@
+package exec;
+
 /**
  * Created by kassi on 19/01/2017.
  */
@@ -8,9 +10,6 @@ public class Person {
     String wikiSuffix;
 
 
-    public Person(){
-
-    }
     public Person(String name, String description, String imageSuffix, String wikiSuffix){
         this.name = name;
         this.description = description;
@@ -50,4 +49,16 @@ public class Person {
     public void setWikiSuffix(String wikiSuffix) {
         this.wikiSuffix = wikiSuffix;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nome: ").append(name).append(", ");
+        sb.append("Descrição: ").append(description).append(", ");
+        sb.append("Imagem: ").append(imageSuffix).append(", ");
+        sb.append("Wiki: ").append(wikiSuffix).append(". ");
+
+        return sb.toString();
+    }
+
 }
