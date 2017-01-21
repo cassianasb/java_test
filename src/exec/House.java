@@ -9,13 +9,23 @@ import java.util.Comparator;
  */
 public class House {
 
+    int id;
     String name;
     ArrayList<Person> people;
 
 
-    public House(String name, ArrayList<Person> people) {
+    public House(int id, String name, ArrayList<Person> people) {
+        this.id = id;
         this.name = name;
         this.people = people;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

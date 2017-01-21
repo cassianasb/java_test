@@ -4,18 +4,29 @@ package exec;
  * Created by kassi on 19/01/2017.
  */
 public class Person {
+
+    int id;
     String name;
     String description;
     String imageSuffix;
     String wikiSuffix;
 
 
-    public Person(String name, String description, String imageSuffix, String wikiSuffix){
+    public Person(int id, String name, String description, String imageSuffix, String wikiSuffix){
+        this.id = id;
         this.name = name;
         this.description = description;
         this.imageSuffix = imageSuffix;
         this.wikiSuffix = imageSuffix;
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
