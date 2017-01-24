@@ -16,9 +16,13 @@ public class HouseDB {
         Connection connection = ConnectionFactory.createConnection();
 
         PreparedStatement prepStatement =
-                connection.prepareStatement("INSERT INTO house(name) VALUES (?)");
+                connection.prepareStatement("INSERT INTO house(name, wikiSuffix) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
         prepStatement.setString(1, house.getName());
+        prepStatement.setString(2, house.getWikiSuffix());
         prepStatement.executeUpdate();
+        ResultSet generatedKeys = prepStatement.getGeneratedKeys();
+        if (generatedKeys.next())
+            house.setId(generatedKeys.getInt(1));
         prepStatement.close();
 
         connection.close();
@@ -28,9 +32,10 @@ public class HouseDB {
         Connection connection = ConnectionFactory.createConnection();
 
         PreparedStatement prepStatement =
-                connection.prepareStatement("UPDATE house SET name = ? where id = ?");
+                connection.prepareStatement("UPDATE house SET name = ?, wikiSuffix = ? where id = ?");
         prepStatement.setString(1, house.getName());
-        prepStatement.setInt(2, house.getId());
+        prepStatement.setString(2, house.getWikiSuffix());
+        prepStatement.setInt(3, house.getId());
         prepStatement.executeUpdate();
         prepStatement.close();
 
@@ -47,6 +52,30 @@ public class HouseDB {
         prepStatement.close();
 
         connection.close();
+    }
+
+    public List<House> list() throws Exception {
+        Connection connection = ConnectionFactory.createConnection();
+
+        List<House> houses = new ArrayList<House>();
+        PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM house");
+        ResultSet result = prepStatement.executeQuery();
+        while (result.next()) {
+            int id = result.getInt("Id");
+            String name = result.getString("Nome");
+            String suffix = result.getString("Sufixo");
+            House house = new House(id, name, suffix);
+            house.setId(id);
+            house.setName(name);
+            house.setWikiSuffix(suffix);
+            houses.add(house);
+        }
+        result.close();
+        prepStatement.close();
+
+        connection.close();
+
+        return houses;
     }
 
 }

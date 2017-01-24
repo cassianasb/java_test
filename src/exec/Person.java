@@ -1,15 +1,18 @@
 package exec;
 
+import java.io.Serializable;
+
 /**
  * Created by kassi on 19/01/2017.
  */
-public class Person {
+public class Person implements Serializable {
 
     int id;
     String name;
     String description;
     String imageSuffix;
     String wikiSuffix;
+    House house;
 
 
     public Person(int id, String name, String description, String imageSuffix, String wikiSuffix){
@@ -18,7 +21,15 @@ public class Person {
         this.description = description;
         this.imageSuffix = imageSuffix;
         this.wikiSuffix = imageSuffix;
+    }
 
+    public Person(int id, String name, String description, String imageSuffix, String wikiSuffix, House house){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.imageSuffix = imageSuffix;
+        this.wikiSuffix = imageSuffix;
+        this.house = house;
     }
 
     public int getId() {
@@ -59,6 +70,14 @@ public class Person {
 
     public void setWikiSuffix(String wikiSuffix) {
         this.wikiSuffix = wikiSuffix;
+    }
+
+    public House getHouse() {
+        return house;
+    }
+
+    public void setHouse(House house) {
+        this.house = house;
     }
 
     @Override

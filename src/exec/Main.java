@@ -2,6 +2,8 @@ package exec;
 
 import com.google.gson.Gson;
 import db_crud.ConnectionFactory;
+import db_crud.PersonDB;
+import db_crud.HouseDB;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,6 +23,7 @@ public class Main {
             //Primeira tarefa
             Houses houses = gson.fromJson(reader, Houses.class);
             System.out.println(houses.toString());
+            //Fim Primeira tarefa
 
             //Segunda Tarefa
             House stark = houses.getHouses()[0];
@@ -32,13 +35,34 @@ public class Main {
                 System.out.println(s.getName());
             }
 
+            //Fim Segunda Tarefa
+
             //Terceira Tarefa
             Connection connection = ConnectionFactory.createConnection();
 
             if (connection!=null) {
                 System.out.println("Conectado! " + connection);
+                HouseDB house_db = new HouseDB();
+                house_db.insert(stark);
+
+                House redwyne = houses.getHouses()[7];
+                house_db.insert(redwyne);
+                ArrayList<Person> redwynes = redwyne.getPeople();
+
+                PersonDB personDB = new PersonDB();
+                for (Person s : starks){
+                    s.setHouse(stark);
+                    personDB.insert(s);
+                }
+
+                for (Person r : redwynes){
+                   r.setHouse(redwyne);
+                    personDB.insert(r);
+                }
+
                 connection.close();
             }
+            //Fim Terceira Tarefa
 
         } catch (Exception e) {
             e.printStackTrace();

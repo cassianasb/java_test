@@ -11,12 +11,19 @@ public class House {
 
     int id;
     String name;
+    String wikiSuffix;
     ArrayList<Person> people;
 
-
-    public House(int id, String name, ArrayList<Person> people) {
+    public House(int id, String name, String wikiSuffix) {
         this.id = id;
         this.name = name;
+        this.wikiSuffix = wikiSuffix;
+    }
+
+    public House(int id, String name, String wikiSuffix, ArrayList<Person> people) {
+        this.id = id;
+        this.name = name;
+        this.wikiSuffix = wikiSuffix;
         this.people = people;
     }
 
@@ -36,6 +43,15 @@ public class House {
         this.name = name;
     }
 
+    public String getWikiSuffix() {
+        return wikiSuffix;
+    }
+
+    public void setWikiSuffix(String wikiSuffix) {
+        this.wikiSuffix = wikiSuffix;
+    }
+
+
     public ArrayList<Person> getPeople() {
         return people;
     }
@@ -48,6 +64,7 @@ public class House {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Nome: ").append(name).append("\n");
+        sb.append("Wiki: ").append(wikiSuffix).append("\n");
         if (people.size()>0)
             sb.append("Membros: ").append("\n");
         for (Person person : people){
