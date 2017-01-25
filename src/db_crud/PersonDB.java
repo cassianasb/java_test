@@ -61,23 +61,22 @@ public class PersonDB {
         connection.close();
     }
 
-    /*public List<Person> list() throws Exception {
+    public List<Person> listMembersStartsWith(String house, String letter) throws Exception {
         Connection connection = ConnectionFactory.createConnection();
 
         List<Person> people = new ArrayList<Person>();
-        PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM person");
+        PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM person p INNER JOIN house h ON p.id_house=h.id_house WHERE h.name = ? AND p.name LIKE ? ");
+        letter+="%";
+        prepStatement.setString(1, house);
+        prepStatement.setString(2, letter);
         ResultSet result = prepStatement.executeQuery();
         while (result.next()) {
-            int id = result.getInt("Id");
-            String name = result.getString("Nome");
-            String description = result.getString("Descrição");
-            String image = result.getString("Imagem");
-            String suffix = result.getString("Sufixo");
-            House house = result.getObject("House");
-            Person person = new Person(id, name, description, image, suffix, house);
-            person.setId(id);
-            person.setName(name);
-            person.setHouse(house);
+            int id = result.getInt("id_person");
+            String name = result.getString("name");
+            String description = result.getString("description");
+            String image = result.getString("imageSuffix");
+            String suffix = result.getString("wikiSuffix");
+            Person person = new Person(id, name, description, image, suffix);
             people.add(person);
         }
         result.close();
@@ -86,6 +85,6 @@ public class PersonDB {
         connection.close();
 
         return people;
-    }*/
+    }
 
 }

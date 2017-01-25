@@ -61,9 +61,9 @@ public class HouseDB {
         PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM house");
         ResultSet result = prepStatement.executeQuery();
         while (result.next()) {
-            int id = result.getInt("Id");
-            String name = result.getString("Nome");
-            String suffix = result.getString("Sufixo");
+            int id = result.getInt("id_house");
+            String name = result.getString("name");
+            String suffix = result.getString("wikiSuffix");
             House house = new House(id, name, suffix);
             house.setId(id);
             house.setName(name);

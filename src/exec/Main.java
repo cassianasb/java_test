@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kassi on 19/01/2017.
@@ -39,9 +40,9 @@ public class Main {
 
             //Terceira Tarefa
             Connection connection = ConnectionFactory.createConnection();
-
             if (connection!=null) {
                 System.out.println("Conectado! " + connection);
+                PersonDB personDB = new PersonDB();
                 HouseDB house_db = new HouseDB();
                 house_db.insert(stark);
 
@@ -49,7 +50,7 @@ public class Main {
                 house_db.insert(redwyne);
                 ArrayList<Person> redwynes = redwyne.getPeople();
 
-                PersonDB personDB = new PersonDB();
+
                 for (Person s : starks){
                     s.setHouse(stark);
                     personDB.insert(s);
@@ -57,8 +58,14 @@ public class Main {
 
                 for (Person r : redwynes){
                    r.setHouse(redwyne);
-                    personDB.insert(r);
+                   personDB.insert(r);
                 }
+               //Quarta Tarefa
+                List<Person> result = personDB.listMembersStartsWith("Starks", "B");
+                for (Person p : result){
+                    System.out.println(p.toString());
+                }
+                //Quarta Tarefa
 
                 connection.close();
             }
