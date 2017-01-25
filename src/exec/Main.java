@@ -44,13 +44,13 @@ public class Main {
                 System.out.println("Conectado! " + connection);
                 PersonDB personDB = new PersonDB();
                 HouseDB house_db = new HouseDB();
-                house_db.insert(stark);
+                //house_db.insert(stark);
 
-                House redwyne = houses.getHouses()[7];
-                house_db.insert(redwyne);
-                ArrayList<Person> redwynes = redwyne.getPeople();
+                //House redwyne = houses.getHouses()[7];
+                //house_db.insert(redwyne);
+                //ArrayList<Person> redwynes = redwyne.getPeople();
 
-
+                /*
                 for (Person s : starks){
                     s.setHouse(stark);
                     personDB.insert(s);
@@ -59,13 +59,21 @@ public class Main {
                 for (Person r : redwynes){
                    r.setHouse(redwyne);
                    personDB.insert(r);
-                }
+                } */
                //Quarta Tarefa
                 List<Person> result = personDB.listMembersStartsWith("Starks", "B");
                 for (Person p : result){
                     System.out.println(p.toString());
                 }
-                //Quarta Tarefa
+                // Fim Quarta Tarefa
+
+                //Quinta Tarefa
+                ArrayList<String> all_houses = house_db.listHouses();
+
+                for (String h : all_houses){
+                    System.out.println(house_db.infos(h));
+                }
+                //Fim Quinta Tarefa
 
                 connection.close();
             }

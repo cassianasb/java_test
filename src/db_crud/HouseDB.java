@@ -54,21 +54,40 @@ public class HouseDB {
         connection.close();
     }
 
-    public List<House> list() throws Exception {
+    public String infos(String house) throws  Exception{
         Connection connection = ConnectionFactory.createConnection();
 
-        List<House> houses = new ArrayList<House>();
-        PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM house");
+        StringBuilder sb = new StringBuilder();
+        PreparedStatement prepStatement = connection.prepareStatement("SELECT h.name, p.name AS member, COUNT(*) AS members_num FROM person p INNER JOIN house h ON p.id_house = h.id_house WHERE h.name = ? LIMIT 1 ");
+        prepStatement.setString(1, house);
+        ResultSet result = prepStatement.executeQuery();
+        while (result.next()){
+            sb.append("Casa: ");
+            sb.append(result.getString("name"));
+            sb.append(" - ");
+            sb.append("Quantidade de pessoas: ");
+            sb.append(result.getString("members_num"));
+            sb.append(" - ");
+            sb.append("1º Membro: ");
+            sb.append(result.getString("member"));
+        }
+        result.close();
+        prepStatement.close();
+
+        connection.close();
+
+        return sb.toString();
+    }
+
+    public ArrayList<String> listHouses() throws Exception {
+        Connection connection = ConnectionFactory.createConnection();
+
+        ArrayList<String> houses = new ArrayList();
+        PreparedStatement prepStatement = connection.prepareStatement("SELECT name FROM house");
         ResultSet result = prepStatement.executeQuery();
         while (result.next()) {
-            int id = result.getInt("id_house");
             String name = result.getString("name");
-            String suffix = result.getString("wikiSuffix");
-            House house = new House(id, name, suffix);
-            house.setId(id);
-            house.setName(name);
-            house.setWikiSuffix(suffix);
-            houses.add(house);
+            houses.add(name);
         }
         result.close();
         prepStatement.close();
